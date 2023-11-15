@@ -7,6 +7,8 @@ import { errorHandler } from './routes/route-factory';
 import { createUserRoutes } from './routes/user-routes';
 import dotenv from 'dotenv';
 import { UserService } from './service/user-service';
+import { WorkoutService } from './service/workout-service';
+import { createWorkoutRoutes } from './routes/workout-routes';
 
 dotenv.config();
 
@@ -23,10 +25,12 @@ app.use(express.json());
 // Init services
 const linkService = new LinkService();
 const userService = new UserService();
+const workoutService = new WorkoutService();
 
 // Create routes
 createUserRoutes(app, userService);
 createLinkRoutes(app, linkService, {});
+createWorkoutRoutes(app, workoutService);
 
 // Errorhandler needs to be registered last
 app.use(errorHandler);

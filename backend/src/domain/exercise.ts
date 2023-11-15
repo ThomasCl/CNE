@@ -1,5 +1,5 @@
 import { CustomError } from "./custom-error";
-import { Exercise_template } from "./exercise_template";
+import { Exercise_template } from "./exercise-template";
 import { Workout } from "./workout";
 
 export class Exercise {

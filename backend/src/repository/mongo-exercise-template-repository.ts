@@ -1,6 +1,6 @@
 import { MongoClient, Collection, Document } from "mongodb";
 import { CustomError } from "../domain/custom-error";
-import { Exercise_template } from "../domain/exercise_template";
+import { Exercise_template } from "../domain/exercise-template";
 
 export class MongoExerciseTemplateRepository {
 

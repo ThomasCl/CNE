@@ -6,7 +6,7 @@ export class CosmosWorkoutRepository {
     private static instance: CosmosWorkoutRepository;
 
     private toWorkout(document: any) {
-        return new Workout(document.name, document.user);
+        return new Workout(document.name);
     }
 
     constructor(private readonly container: any) {
@@ -33,7 +33,6 @@ export class CosmosWorkoutRepository {
     async createWorkout(workout: Workout): Promise<Workout> {
         const result = await this.container.items.create({
             name: workout.name,
-            user: workout.user,
         });
 
         if (result && result.statusCode === 201) {

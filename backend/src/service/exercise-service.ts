@@ -3,7 +3,7 @@ import { CustomError } from "../domain/custom-error";
 import { Exercise } from "../domain/exercise";
 import { Exercise_template } from "../domain/exercise-template";
 import { Workout } from "../domain/workout";
-import { MongoExerciseRepository } from "../repository/mongo-exercise-repository";
+import { CosmosExerciseRepository } from "../repository/cosmos-exercise-repository";
 
 export class ExerciseService {
 
@@ -17,7 +17,7 @@ export class ExerciseService {
   }
 
   private async getRepo() {
-    return MongoExerciseRepository.getInstance();
+    return CosmosExerciseRepository.getInstance();
   }
 
   async addExercise(id: number, template: Exercise_template, workout: Workout) {
@@ -29,9 +29,9 @@ export class ExerciseService {
       throw CustomError.invalid('Exercise template or workout are invalid.');
     }
 
-    if (await (await this.getRepo()).exerciseExists(id)) {
-      throw CustomError.conflict('An exercise with this ID already exists.');
-    }
+    // if (await (await this.getRepo()).exerciseExists(id)) {
+    //   throw CustomError.conflict('An exercise with this ID already exists.');
+    // }
 
     const exercise = new Exercise(id, template, workout);
     return (await this.getRepo()).createExercise(exercise);

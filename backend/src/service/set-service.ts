@@ -2,7 +2,7 @@
 import { CustomError } from "../domain/custom-error";
 import { Exercise } from "../domain/exercise";
 import { Set } from "../domain/set";
-import { MongoSetRepository } from "../repository/mongo-set-repository";
+import { CosmosSetRepository } from "../repository/cosmos-set-repository";
 
 export class SetService {
 
@@ -16,7 +16,7 @@ export class SetService {
   }
 
   private async getRepo() {
-    return MongoSetRepository.getInstance();
+    return CosmosSetRepository.getInstance();
   }
 
   async addSet(exercise: Exercise, number: number, weight: number, reps: number) {
@@ -24,19 +24,19 @@ export class SetService {
       throw CustomError.invalid('Set parameters are invalid.');
     }
 
-    if (await (await this.getRepo()).setExists(exercise.id, number)) {
-      throw CustomError.conflict('A set with this exercise ID and set number already exists.');
+    if (await (await this.getRepo()).setExists(exercise, number)) {
+      throw CustomError.conflict('A set with this exercise and set number already exists.');
     }
 
     const set = new Set(exercise, number, weight, reps);
     return (await this.getRepo()).createSet(set);
   }
 
-  async getSet(exerciseId: number, number: number) {
-    if (!exerciseId || !number) {
-      throw CustomError.invalid('Exercise ID or set number is invalid.');
+  async getSet(exercise: Exercise, number: number) {
+    if (!exercise || !number) {
+      throw CustomError.invalid('Exercise or set number is invalid.');
     }
 
-    return (await this.getRepo()).getSet(exerciseId, number);
+    return (await this.getRepo()).getSet(exercise, number);
   }
 }

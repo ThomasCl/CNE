@@ -1,7 +1,7 @@
 // exerciseTemplateService.ts
 import { CustomError } from "../domain/custom-error";
 import { Exercise_template } from "../domain/exercise-template";
-import { MongoExerciseTemplateRepository } from "../repository/mongo-exercise-template-repository";
+import { CosmosExerciseTemplateRepository } from "../repository/cosmos-exercise-template-repository";
 
 export class ExerciseTemplateService {
 
@@ -15,7 +15,7 @@ export class ExerciseTemplateService {
   }
 
   private async getRepo() {
-    return MongoExerciseTemplateRepository.getInstance();
+    return CosmosExerciseTemplateRepository.getInstance();
   }
 
   async addExerciseTemplate(name: string, group: string) {

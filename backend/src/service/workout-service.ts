@@ -2,7 +2,7 @@
 import { CustomError } from "../domain/custom-error";
 import { User } from "../domain/user";
 import { Workout } from "../domain/workout";
-import { MongoWorkoutRepository } from "../repository/mongo-workout-repository";
+import { CosmosWorkoutRepository } from "../repository/cosmos-workout-repository";
 
 export class WorkoutService {
 
@@ -16,7 +16,7 @@ export class WorkoutService {
   }
 
   private async getRepo() {
-    return MongoWorkoutRepository.getInstance();
+    return CosmosWorkoutRepository.getInstance();
   }
 
   async addWorkout(name: string, user: User) {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../domain/custom-error";
-import { UserService } from "../service/user-service";
+// import { UserService } from "../service/user-service";
 
 export const errorHandler = (error: unknown, req: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) {
@@ -24,20 +24,20 @@ export const unauthenticatedRoute = async (req: Request, res: Response, next: Ne
 
 export const authenticatedRoute = async (req: Request, res: Response, next: NextFunction) => {
   const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
-  const [email, password] = Buffer.from(b64auth, 'base64').toString().split(':')
+  // const [email, password] = Buffer.from(b64auth, 'base64').toString().split(':')
 
-  if (email && password) {
-    try {
-      const user = await UserService.getInstance().getUser(email);
-      await user.validate(password);
-      req.user = user.toSimpleUser();
+  // if (email && password) {
+  //   try {
+  //     const user = await UserService.getInstance().getUser(email);
+  //     await user.validate(password);
+  //     req.user = user.toSimpleUser();
       return next()
-    } catch (error) {
-      return next(CustomError.unauthenticated("Not authenticated."));
-    }
-  } else {
-    next(CustomError.unauthenticated("Not authenticated."));
-  }
+  //   } catch (error) {
+  //     return next(CustomError.unauthenticated("Not authenticated."));
+  //   }
+  // } else {
+  //   next(CustomError.unauthenticated("Not authenticated."));
+  // }
 }
 
 export const wrapRoute = (handler: () => Promise<void>, next: NextFunction) => {

@@ -1,6 +1,7 @@
 import { CosmosClient } from '@azure/cosmos';
 import { CustomError } from '../domain/custom-error';
 import { Workout } from '../domain/workout';
+import { config } from 'dotenv';
 
 export class CosmosWorkoutRepository {
     private static instance: CosmosWorkoutRepository;
@@ -17,11 +18,15 @@ export class CosmosWorkoutRepository {
 
     static async getInstance() {
         if (!this.instance) {
-            const cosmosDbConnString = process.env.COSMOS_DB_CONN_STRING || '';
-            const cosmosDbName = process.env.COSMOS_DB_NAME || 'll-db';
+            config();
+            const endpoint = process.env.COSMOS_DB_ENDPOINT;
+            const key = process.env.COSMOS_DB_KEY;
+            const cosmosDbName = process.env.COSMOS_DB_NAME || 'db';
             const containerId = 'workouts';
-
-            const client = new CosmosClient(cosmosDbConnString);
+            if(endpoint == undefined || key == undefined){
+                throw new Error('Cosmos DB connection string is not defined.');
+            }
+            const client = new CosmosClient({endpoint,key});
             const database = client.database(cosmosDbName);
             const container = database.container(containerId);
 

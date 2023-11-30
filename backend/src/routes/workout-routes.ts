@@ -2,6 +2,7 @@ import { Express, NextFunction, Request, Response } from "express";
 import { unauthenticatedRoute, wrapRoute } from "./route-factory";
 import { CustomError } from "../domain/custom-error";
 import { WorkoutService } from "../service/workout-service";
+// import { insertData } from "../insert";
 
 export const createWorkoutRoutes = (expressApp: Express, workoutService: WorkoutService) => {
 
@@ -15,7 +16,7 @@ export const createWorkoutRoutes = (expressApp: Express, workoutService: Workout
         throw CustomError.invalid("Please provide a name and user for the workout.");
       }
 
-      await workoutService.addWorkout(name, user);
+      await workoutService.addWorkout(name);
       res.status(201).json({ name });
     }, next);
   });
@@ -39,4 +40,10 @@ export const createWorkoutRoutes = (expressApp: Express, workoutService: Workout
       res.json("xxx");
     }, next);
   });
+  // expressApp.get('/insertData', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+  //   wrapRoute(async () => {
+  //     insertData();
+  //     res.json("Done");
+  //   }, next);
+  // });
 }

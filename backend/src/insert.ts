@@ -1,60 +1,72 @@
-import { MongoClient } from "mongodb";
+// import { CosmosClient } from '@azure/cosmos';
+// import { CustomError } from './domain/custom-error';
 
-const mongoClient = new MongoClient("mongodb://localhost:27017", { useNewUrlParser: true, useUnifiedTopology: true });
+// const cosmosDbConnString = process.env.COSMOS_DB_CONN_STRING || '';
+// const cosmosDbName = process.env.COSMOS_DB_NAME || 'll-db';
 
-const insertData = async () => {
-  try {
-    await mongoClient.connect();
-    const db = mongoClient.db("ll-db");
-    
-    // Insert Exercise Template
-    await db.collection("exercise_templates").insertOne({
-      name: "Bench Press",
-      group: "Upper Body"
-    });
+// const client = new CosmosClient(cosmosDbConnString);
+// const database = client.database(cosmosDbName);
 
-    // Insert Workout
-    await db.collection("workouts").insertOne({
-      name: "Chest Day",
-      user: "example_user"
-    });
+// export const insertData = async () => {
+//   try {
+//     // Create a container for exercise templates
+//     const exerciseTemplateContainer = database.container('templates');
 
-    // Insert Exercise
-    await db.collection("exercises").insertOne({
-      id: 1,
-      template: {
-        name: "Bench Press",
-        group: "Upper Body"
-      },
-      workout: {
-        name: "Chest Day",
-        user: "example_user"
-      }
-    });
+//     // Insert Exercise Template
+//     await exerciseTemplateContainer.items.create({
+//       name: 'Bench Press',
+//       group: 'Upper Body',
+//     });
 
-    // Insert Set
-    await db.collection("sets").insertOne({
-      exercise: {
-        id: 1,
-        template: {
-          name: "Bench Press",
-          group: "Upper Body"
-        },
-        workout: {
-          name: "Chest Day",
-          user: "example_user"
-        }
-      },
-      number: 1,
-      weight: 100,
-      reps: 10
-    });
+//     // Create a container for workouts
+//     const workoutContainer = database.container('workouts');
 
-    console.log("Data inserted successfully!");
-  } finally {
-    await mongoClient.close();
-  }
-};
+//     // Insert Workout
+//     await workoutContainer.items.create({
+//       name: 'Chest Day',
+//       user: 'example_user',
+//     });
 
-// Run the insertion function
-insertData();
+//     // Create a container for exercises
+//     const exerciseContainer = database.container('exercises');
+
+//     // Insert Exercise
+//     await exerciseContainer.items.create({
+//       template: {
+//         name: 'Bench Press',
+//         group: 'Upper Body',
+//       },
+//       workout: {
+//         name: 'Chest Day',
+//         user: 'example_user',
+//       },
+//     });
+
+//     // Create a container for sets
+//     const setContainer = database.container('sets');
+
+//     // Insert Set
+//     await setContainer.items.create({
+//       exercise: {
+//         template: {
+//           name: 'Bench Press',
+//           group: 'Upper Body',
+//         },
+//         workout: {
+//           name: 'Chest Day',
+//           user: 'example_user',
+//         },
+//       },
+//       number: 1,
+//       weight: 100,
+//       reps: 10,
+//     });
+
+//     console.log('Data inserted successfully!');
+//   } catch (error) {
+//     console.error(error);
+//     throw CustomError.internal('Error inserting data.');
+//   }
+// };
+
+// // Run the insertion function

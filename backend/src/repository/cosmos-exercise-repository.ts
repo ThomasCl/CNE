@@ -20,14 +20,13 @@ export class CosmosExerciseRepository {
     static async getInstance() {
         if (!this.instance) {
             config();
-            const endpoint = process.env.COSMOS_DB_ENDPOINT;
-            const key = process.env.COSMOS_DB_KEY;
+            const connectionString = process.env.COSMOS_DB_CONN_STRING;
             const cosmosDbName = process.env.COSMOS_DB_NAME || 'db';
             const containerId = 'exercises';
-            if(endpoint == undefined || key == undefined){
+            if(connectionString == undefined){
                 throw new Error('Cosmos DB connection string is not defined.');
             }
-            const client = new CosmosClient({endpoint,key});
+            const client = new CosmosClient(connectionString);
             const database = client.database(cosmosDbName);
             const container = database.container(containerId);
 

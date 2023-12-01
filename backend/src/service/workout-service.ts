@@ -38,4 +38,8 @@ export class WorkoutService {
 
     return (await this.getRepo()).getWorkout(name);
   }
+
+  async getWorkouts(){
+    return (await this.getRepo()).getAllWorkouts();
+  }
 }

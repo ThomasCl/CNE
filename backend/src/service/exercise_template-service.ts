@@ -42,4 +42,16 @@ export class ExerciseTemplateService {
 
     return (await this.getRepo()).getTemplate(name);
   }
+
+  async getExerciseTemplatesLike(name: string) {
+    if (!name) {
+      throw CustomError.invalid('Exercise template name is invalid.');
+    }
+
+    return (await this.getRepo()).getTemplatesLike(name);
+  }
+
+  async getExerciseTemplates(){
+    return (await this.getRepo()).getAllTemplates();
+  }
 }

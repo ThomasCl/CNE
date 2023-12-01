@@ -44,4 +44,8 @@ export class ExerciseService {
 
     return (await this.getRepo()).getExercise(id);
   }
+
+  async getExercises(){
+    return (await this.getRepo()).getAllExercises();
+  }
 }

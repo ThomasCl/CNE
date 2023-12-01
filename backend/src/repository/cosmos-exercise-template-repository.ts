@@ -65,4 +65,34 @@ export class CosmosExerciseTemplateRepository {
             throw CustomError.notFound('Template not found.');
         }
     }
+
+    async getAllTemplates(): Promise<Exercise_template[]> {
+        const query = `SELECT * FROM c`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            let items: Exercise_template[] = [];
+            resources.forEach((resource: any) => {
+                items.push(this.toTemplate(resource));
+            });
+            return items;
+        } else {
+            throw CustomError.notFound('Exercise not found.');
+        }
+    }
+
+    async getTemplatesLike(name: string): Promise<Exercise_template[]> {
+        const query = `SELECT * FROM c WHERE CONTAINS(c.name, "${name}")`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            let items: Exercise_template[] = [];
+            resources.forEach((resource: any) => {
+                items.push(this.toTemplate(resource));
+            });
+            return items;
+        } else {
+            throw CustomError.notFound('Template not found.');
+        }
+    }
 }

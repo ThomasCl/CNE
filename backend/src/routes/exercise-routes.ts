@@ -33,4 +33,12 @@ export const createExerciseRoutes = (expressApp: Express, exerciseService: Exerc
       res.json(exercise);
     }, next);
   });
+
+
+  expressApp.get('/exercises', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+    wrapRoute(async () => {
+      const exercises = await exerciseService.getExercises();
+      res.json(exercises);
+    }, next);
+  });
 }

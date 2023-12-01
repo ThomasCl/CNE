@@ -32,16 +32,17 @@ export const createWorkoutRoutes = (expressApp: Express, workoutService: Workout
     }, next);
   });
 
-
-  expressApp.get('/workouts/get', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
-    wrapRoute(async () => {
-      res.json("xxx");
-    }, next);
-  });
   // expressApp.get('/insertData', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
   //   wrapRoute(async () => {
   //     insertData();
   //     res.json("Done");
   //   }, next);
   // });
+
+  expressApp.get('/workouts', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+    wrapRoute(async () => {
+      const results = await workoutService.getWorkouts();
+      res.json(results);
+    }, next);
+  });
 }

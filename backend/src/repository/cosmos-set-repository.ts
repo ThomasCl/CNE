@@ -71,4 +71,19 @@ export class CosmosSetRepository {
             throw CustomError.notFound('Set not found.');
         }
     }
+
+    async getAllSets(): Promise<Set[]> {
+        const query = `SELECT * FROM c`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            let items: Set[] = [];
+            resources.forEach((resource: any) => {
+                items.push(this.toSet(resource));
+            });
+            return items;
+        } else {
+            throw CustomError.notFound('Exercise not found.');
+        }
+    }
 }

@@ -32,4 +32,12 @@ export const createSetRoutes = (expressApp: Express, setService: SetService) => 
       res.json(set);
     }, next);
   });
+
+
+  expressApp.get('/sets', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+    wrapRoute(async () => {
+      const results = await setService.getSets();
+      res.json(results);
+    }, next);
+  });
 }

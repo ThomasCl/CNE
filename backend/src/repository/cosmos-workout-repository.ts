@@ -63,4 +63,19 @@ export class CosmosWorkoutRepository {
             throw CustomError.notFound('Workout not found.');
         }
     }
+
+    async getAllWorkouts(): Promise<Workout[]> {
+        const query = `SELECT * FROM c`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            let items: Workout[] = [];
+            resources.forEach((resource: any) => {
+                items.push(this.toWorkout(resource));
+            });
+            return items;
+        } else {
+            throw CustomError.notFound('Exercise not found.');
+        }
+    }
 }

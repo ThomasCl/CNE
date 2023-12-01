@@ -46,5 +46,9 @@ export class SetService {
     return (await this.getRepo()).getSet(exercise, number);
   }
 
-getExerciseService() { return ExerciseService.getInstance(); }
+  getExerciseService() { return ExerciseService.getInstance(); }
+
+  async getSets(){
+    return (await this.getRepo()).getAllSets();
+  }
 }

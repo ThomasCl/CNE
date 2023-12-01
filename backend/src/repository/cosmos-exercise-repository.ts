@@ -1,7 +1,10 @@
 import { CosmosClient } from '@azure/cosmos';
 import { CustomError } from "../domain/custom-error";
-import { Exercise } from "../domain/exercise";
+import { Exercise, SimpleExercise } from "../domain/exercise";
 import { config } from 'dotenv';
+import { Exercise_template } from '../domain/exercise-template';
+import { Workout } from '../domain/workout';
+import { v4 as uuidv4 } from 'uuid';
 
 export class CosmosExerciseRepository {
 
@@ -35,14 +38,16 @@ export class CosmosExerciseRepository {
         return this.instance;
     };
 
-    async createExercise(exercise: Exercise): Promise<Exercise> {
+    async createExercise(exercise: SimpleExercise): Promise<Exercise> {
+        console.log(exercise);
+        const exerciseId = uuidv4();
         const result = await this.container.items.create({
-            id: exercise.id,
+            id: exerciseId,
             template: exercise.template,
             workout: exercise.workout
         });
-        if (result && result.acknowledged && result.insertedId) {
-            return this.getExercise(exercise.id);
+        if (result && result.statusCode === 201) {
+            return this.getExerciseById(exerciseId);
         } else {
             throw CustomError.internal("Could not create exercise.");
         }
@@ -53,7 +58,7 @@ export class CosmosExerciseRepository {
     //     return !!result;
     // }
 
-    async getExercise(id: number): Promise<Exercise> {
+    async getExerciseById(id: string): Promise<Exercise> {
         const query = `SELECT * FROM c WHERE c.id = "${id}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
 
@@ -64,6 +69,16 @@ export class CosmosExerciseRepository {
         }
     }
 
+    async getExercise(template: Exercise_template, workout: Workout): Promise<Exercise> {
+        const query = `SELECT * FROM c WHERE c.template = "${template}" and c.workout = "${workout}`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            return this.toExercise(resources[0]);
+        } else {
+            throw CustomError.notFound('Exercise not found.');
+        }
+    }
 
     async getAllExercises(): Promise<Exercise[]> {
         const query = `SELECT * FROM c`;

@@ -39,7 +39,7 @@ export class SetService {
     }
     const exerciseService = ExerciseService.getInstance();
     let exercise: Exercise;
-    exercise = await this.getExerciseService().getExercise(exerciseId);
+    exercise = await this.getExerciseService().getExerciseById(exerciseId.toString());
     if (!exercise) {
       throw CustomError.notFound('Exercise not found.');
     }

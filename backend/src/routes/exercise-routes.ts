@@ -8,15 +8,15 @@ export const createExerciseRoutes = (expressApp: Express, exerciseService: Exerc
   expressApp.post('/exercises', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {
       const {
-        id, template, workout
+        template, workout
       } = req.body;
 
-      if (!id || !template || !workout) {
+      if (!template || !workout) {
         throw CustomError.invalid("Please provide an ID, template, and workout for the exercise.");
       }
 
-      await exerciseService.addExercise(id, template, workout);
-      res.status(201).json({ id });
+      
+      res.status(201).json(await exerciseService.addExercise(template, workout));
     }, next);
   });
 
@@ -29,7 +29,7 @@ export const createExerciseRoutes = (expressApp: Express, exerciseService: Exerc
 
       }
 
-      const exercise = await exerciseService.getExercise(Number(id));
+      const exercise = await exerciseService.getExerciseById(id);
       res.json(exercise);
     }, next);
   });

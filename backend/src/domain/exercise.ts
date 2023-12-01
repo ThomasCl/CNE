@@ -9,3 +9,7 @@ export class Exercise {
     }
   }
 }
+
+export class SimpleExercise {
+  constructor(readonly template: Exercise_template, readonly workout: Workout) { }
+}

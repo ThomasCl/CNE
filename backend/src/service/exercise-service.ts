@@ -1,9 +1,12 @@
 // exerciseService.ts
+import { W } from "mongodb";
 import { CustomError } from "../domain/custom-error";
-import { Exercise } from "../domain/exercise";
+import { Exercise, SimpleExercise } from "../domain/exercise";
 import { Exercise_template } from "../domain/exercise-template";
 import { Workout } from "../domain/workout";
 import { CosmosExerciseRepository } from "../repository/cosmos-exercise-repository";
+import { CosmosExerciseTemplateRepository } from "../repository/cosmos-exercise-template-repository";
+import { CosmosWorkoutRepository } from "../repository/cosmos-workout-repository";
 
 export class ExerciseService {
 
@@ -19,30 +22,42 @@ export class ExerciseService {
   private async getRepo() {
     return CosmosExerciseRepository.getInstance();
   }
+  private async getTemplateRepo() {
+    return CosmosExerciseTemplateRepository.getInstance();
+  }
+  private async getWorkoutRepo() {
+    return CosmosWorkoutRepository.getInstance();
+  }
+  
+  
 
-  async addExercise(id: number, template: Exercise_template, workout: Workout) {
-    if (!id) {
-      throw CustomError.invalid('Exercise ID is invalid.');
-    }
-
-    if (!template || !workout) {
+  async addExercise(templateName: string, workoutName: string) {
+    if (!templateName || !workoutName) {
       throw CustomError.invalid('Exercise template or workout are invalid.');
     }
-
-    // if (await (await this.getRepo()).exerciseExists(id)) {
-    //   throw CustomError.conflict('An exercise with this ID already exists.');
-    // }
-
-    const exercise = new Exercise(id, template, workout);
+    const template = await (await this.getTemplateRepo()).getTemplate(templateName);
+    const workout = await (await this.getWorkoutRepo()).getWorkout(workoutName);
+    if(!template || !workout){
+      throw CustomError.invalid('Exercise template or workout do not exist.');
+    }
+    const exercise = new SimpleExercise(template, workout);
     return (await this.getRepo()).createExercise(exercise);
   }
 
-  async getExercise(id: number) {
+  async getExerciseById(id: string) {
     if (!id) {
       throw CustomError.invalid('Exercise ID is invalid.');
     }
 
-    return (await this.getRepo()).getExercise(id);
+    return (await this.getRepo()).getExerciseById(id);
+  }
+
+  async getExercise(template: Exercise_template, workout: Workout) {
+    if (!template || !workout) {
+      throw CustomError.invalid('form is invalid.');
+    }
+
+    return (await this.getRepo()).getExercise(template,workout);
   }
 
   async getExercises(){

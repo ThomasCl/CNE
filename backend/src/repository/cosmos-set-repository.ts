@@ -72,6 +72,17 @@ export class CosmosSetRepository {
         }
     }
 
+    async getSetById(id: number): Promise<Set> {
+        const query = `SELECT * FROM c WHERE c.id = "${id}"`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            return this.toSet(resources[0]);
+        } else {
+            throw CustomError.notFound('Set not found.');
+        }
+    }
+
     async getAllSets(): Promise<Set[]> {
         const query = `SELECT * FROM c`;
         const { resources } = await this.container.items.query(query).fetchAll();

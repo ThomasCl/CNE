@@ -64,6 +64,17 @@ export class CosmosWorkoutRepository {
         }
     }
 
+    async getWorkoutById(id: number): Promise<Workout> {
+        const query = `SELECT * FROM c WHERE c.id = "${id}"`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            return this.toWorkout(resources[0]);
+        } else {
+            throw CustomError.notFound('Workout not found.');
+        }
+    }
+
     async getAllWorkouts(): Promise<Workout[]> {
         const query = `SELECT * FROM c`;
         const { resources } = await this.container.items.query(query).fetchAll();

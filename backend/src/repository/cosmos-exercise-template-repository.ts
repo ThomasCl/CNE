@@ -95,4 +95,15 @@ export class CosmosExerciseTemplateRepository {
             throw CustomError.notFound('Template not found.');
         }
     }
+
+    async getTemplateById(id: number): Promise<Exercise_template> {
+        const query = `SELECT * FROM c WHERE c.id = "${id}"`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            return this.toTemplate(resources[0]);
+        } else {
+            throw CustomError.notFound('Template not found.');
+        }
+    }
 }

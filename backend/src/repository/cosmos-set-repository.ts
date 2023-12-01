@@ -3,7 +3,7 @@ import { CustomError } from "../domain/custom-error";
 import { Set, SimpleSet } from "../domain/set";
 import { Exercise } from "../domain/exercise";
 import { config } from "dotenv";
-
+import { v4 as uuidv4 } from 'uuid';
 export class CosmosSetRepository {
 
     private static instance: CosmosSetRepository;
@@ -45,7 +45,7 @@ export class CosmosSetRepository {
     async createSet(set: SimpleSet): Promise<Set> {
         const result = await this.container.items.create({
             id: uuidv4(),
-            exercise: set.exercise,
+            exercise: set.exercise.id,
             number: set.number,
             weight: set.weight,
             reps: set.reps
@@ -58,13 +58,13 @@ export class CosmosSetRepository {
     }
 
     async setExists(exercise: Exercise, number: number): Promise<boolean> {
-        const query = `SELECT * FROM c WHERE c.exercise = "${exercise}" AND c.number = "${number}"`;
+        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
         return resources.length > 0;
     }
 
     async getSet(exercise: Exercise, number: number): Promise<Set> {
-        const query = `SELECT * FROM c WHERE c.exercise.template.name = "${exercise.template.name}" AND c.exercise.workout.name = "${exercise.workout.name}"  AND c.number = "${number}"`;
+        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" AND c.number = "${number}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
 
         if (resources.length > 0) {
@@ -99,8 +99,4 @@ export class CosmosSetRepository {
             throw CustomError.notFound('Exercise not found.');
         }
     }
-}
-
-function uuidv4() {
-    throw new Error("Function not implemented.");
 }

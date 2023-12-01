@@ -39,12 +39,11 @@ export class CosmosExerciseRepository {
     };
 
     async createExercise(exercise: SimpleExercise): Promise<Exercise> {
-        console.log(exercise);
         const exerciseId = uuidv4();
         const result = await this.container.items.create({
             id: exerciseId,
-            template: exercise.template,
-            workout: exercise.workout
+            template: exercise.template.name,
+            workout: exercise.workout.name
         });
         if (result && result.statusCode === 201) {
             return this.getExerciseById(exerciseId);
@@ -70,7 +69,7 @@ export class CosmosExerciseRepository {
     }
 
     async getExercise(template: Exercise_template, workout: Workout): Promise<Exercise> {
-        const query = `SELECT * FROM c WHERE c.template.name = "${template.name}" and c.workout.name = "${workout.name}"`;
+        const query = `SELECT * FROM c WHERE c.template = "${template.name}" and c.workout = "${workout.name}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
         if (resources.length > 0) {
             return this.toExercise(resources[0]);

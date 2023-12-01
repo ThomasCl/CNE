@@ -1,12 +1,11 @@
 // exerciseService.ts
-import { W } from "mongodb";
 import { CustomError } from "../domain/custom-error";
 import { Exercise, SimpleExercise } from "../domain/exercise";
 import { Exercise_template } from "../domain/exercise-template";
 import { Workout } from "../domain/workout";
-import { CosmosExerciseRepository } from "../repository/cosmos-exercise-repository";
-import { CosmosExerciseTemplateRepository } from "../repository/cosmos-exercise-template-repository";
-import { CosmosWorkoutRepository } from "../repository/cosmos-workout-repository";
+import { CosmosExerciseRepository } from "../repository/cosmos-exercise-repository";;
+import { ExerciseTemplateService } from "./exercise_template-service";
+import { WorkoutService } from "./workout-service";
 
 export class ExerciseService {
 
@@ -22,11 +21,11 @@ export class ExerciseService {
   private async getRepo() {
     return CosmosExerciseRepository.getInstance();
   }
-  private async getTemplateRepo() {
-    return CosmosExerciseTemplateRepository.getInstance();
+  private async getTemplateService() {
+    return ExerciseTemplateService.getInstance();
   }
-  private async getWorkoutRepo() {
-    return CosmosWorkoutRepository.getInstance();
+  private async getWorkoutService() {
+    return WorkoutService.getInstance();
   }
   
   
@@ -35,8 +34,8 @@ export class ExerciseService {
     if (!templateName || !workoutName) {
       throw CustomError.invalid('Exercise template or workout are invalid.');
     }
-    const template = await (await this.getTemplateRepo()).getTemplate(templateName);
-    const workout = await (await this.getWorkoutRepo()).getWorkout(workoutName);
+    const template = await (await this.getTemplateService()).getExerciseTemplate(templateName);
+    const workout = await (await this.getWorkoutService()).getWorkout(workoutName);
     if(!template || !workout){
       throw CustomError.invalid('Exercise template or workout do not exist.');
     }
@@ -56,7 +55,6 @@ export class ExerciseService {
     if (!template || !workout) {
       throw CustomError.invalid('form is invalid.');
     }
-
     return (await this.getRepo()).getExercise(template,workout);
   }
 

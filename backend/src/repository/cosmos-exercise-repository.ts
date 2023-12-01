@@ -70,9 +70,8 @@ export class CosmosExerciseRepository {
     }
 
     async getExercise(template: Exercise_template, workout: Workout): Promise<Exercise> {
-        const query = `SELECT * FROM c WHERE c.template = "${template}" and c.workout = "${workout}`;
+        const query = `SELECT * FROM c WHERE c.template.name = "${template.name}" and c.workout.name = "${workout.name}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
-
         if (resources.length > 0) {
             return this.toExercise(resources[0]);
         } else {

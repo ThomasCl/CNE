@@ -8,15 +8,12 @@ export const createSetRoutes = (expressApp: Express, setService: SetService) => 
   expressApp.post('/sets', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {
       const {
-        exercise, number, weight, reps
+        exerciseName, workoutName, number, weight, reps
       } = req.body;
-
-      if (!exercise || !number || !weight || !reps) {
+      if (!exerciseName || !workoutName || !number || !weight || !reps) {
         throw CustomError.invalid("Please provide exercise, number, weight, and reps for the set.");
       }
-
-      await setService.addSet(exercise, number, weight, reps);
-      res.status(201).json({ exercise, number });
+      res.status(201).json(await setService.addSet(exerciseName, workoutName, number, weight, reps));
     }, next);
   });
 

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const WorkoutList = () => {
+const WorkoutList = ({setWorkout}) => {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const WorkoutList = () => {
       <h2>Workouts</h2>
       <ul>
         {workouts.map(workout => (
-          <li key={workout.id}>{workout.name}</li>
+          <li key={workout.name} onClick={() => setWorkout(workout)}>{workout.name}</li>
         ))}
       </ul>
     </div>

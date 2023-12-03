@@ -58,7 +58,7 @@ export class CosmosSetRepository {
     }
 
     async setExists(exercise: Exercise, number: number): Promise<boolean> {
-        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}"`;
+        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" and c.number = "${number}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
         return resources.length > 0;
     }
@@ -69,6 +69,21 @@ export class CosmosSetRepository {
 
         if (resources.length > 0) {
             return this.toSet(resources[0]);
+        } else {
+            throw CustomError.notFound('Set not found.');
+        }
+    }
+
+    async getSetsByExercise(exercise: string): Promise<Set[]> {
+        const query = `SELECT * FROM c WHERE c.exercise = "${exercise}" order by c.number`;
+        const { resources } = await this.container.items.query(query).fetchAll();
+
+        if (resources.length > 0) {
+            let items: Set[] = [];
+            resources.forEach((resource: any) => {
+                items.push(this.toSet(resource));
+            });
+            return items;
         } else {
             throw CustomError.notFound('Set not found.');
         }

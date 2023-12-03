@@ -2,13 +2,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const SetForm = ({ exerciseId }) => {
+const SetForm = ({ exercise }) => {
   const [weight, setWeight] = useState('');
   const [reps, setReps] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleCreateSet = () => {
     // Send a POST request to create a new set for a specific exercise
-    axios.post(`http://localhost:3000/exercises/${exerciseId}/sets`, { weight, reps })
+    console.log(exercise);
+    let exerciseName = exercise.template;
+    let workoutName = exercise.workout;
+    axios.post(`http://localhost:3000/sets`, { exerciseName, workoutName,number,weight, reps })
       .then(response => console.log('Set created:', response.data))
       .catch(error => console.error('Error creating set:', error));
   };
@@ -16,6 +20,12 @@ const SetForm = ({ exerciseId }) => {
   return (
     <div>
       <h2>Create Set</h2>
+      <input
+        type="text"
+        placeholder="SetNumber"
+        value={number}
+        onChange={(e) => setNumber(e.target.value)}
+      />
       <input
         type="text"
         placeholder="Weight"

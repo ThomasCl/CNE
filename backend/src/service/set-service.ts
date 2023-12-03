@@ -26,7 +26,7 @@ export class SetService {
     if (!exerciseName || !workoutName || !number || !weight || !reps) {
       throw CustomError.invalid('Set parameters are invalid.');
     }
-    const  exercise = await this.getExerciseService().getExercise(await this.getTemplateService().getExerciseTemplate(exerciseName), await this.getWorkoutService().getWorkout(workoutName))
+    const  exercise = await this.getExerciseService().getExercise(await this.getTemplateService().getExerciseTemplate(exerciseName), await this.getWorkoutService().getWorkout(workoutName));
     if (await (await this.getRepo()).setExists(exercise, number)) {
       throw CustomError.conflict('A set with this exercise and set number already exists.');
     }
@@ -47,6 +47,20 @@ export class SetService {
     }
     return (await this.getRepo()).getSet(exercise, number);
   }
+
+  async getSetsByExercise(exerciseId: string) {
+    if (!exerciseId) {
+      throw CustomError.invalid('ExerciseId is invalid.');
+    }
+    // const exerciseService = ExerciseService.getInstance();
+    // let exercise: Exercise;
+    // exercise = await this.getExerciseService().getExerciseById(exerciseId.toString());
+    // if (!exercise) {
+    //   throw CustomError.notFound('Exercise not found.');
+    // }
+    return (await this.getRepo()).getSetsByExercise(exerciseId);
+  }
+
 
   getExerciseService() { return ExerciseService.getInstance(); }
   getTemplateService(){ return ExerciseTemplateService.getInstance(); }

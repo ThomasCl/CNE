@@ -51,6 +51,14 @@ export class ExerciseService {
     return (await this.getRepo()).getExerciseById(id);
   }
 
+  async getExerciseByWorkout(name: string) {
+    if (!name) {
+      throw CustomError.invalid('Exercise ID is invalid.');
+    }
+    const workout = await (await this.getWorkoutService()).getWorkout(name);
+    return (await this.getRepo()).getExerciseByWorkout(workout);
+  }
+
   async getExercise(template: Exercise_template, workout: Workout) {
     if (!template || !workout) {
       throw CustomError.invalid('form is invalid.');

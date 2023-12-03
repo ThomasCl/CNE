@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ExerciseForm = ({ workoutId }) => {
+const ExerciseForm = ({ workoutName }) => {
   const [exerciseName, setExerciseName] = useState('');
 
   const handleCreateExercise = () => {
     // Send a POST request to create a new exercise for a specific workout
-    axios.post(`http://localhost:3000/workouts/${workoutId}/exercises`, { name: exerciseName })
+    axios.post(`http://localhost:3000/exercises`, { template: exerciseName, workout: workoutName })
       .then(response => console.log('Exercise created:', response.data))
       .catch(error => console.error('Error creating exercise:', error));
   };

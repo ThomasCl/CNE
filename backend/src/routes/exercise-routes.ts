@@ -34,6 +34,20 @@ export const createExerciseRoutes = (expressApp: Express, exerciseService: Exerc
     }, next);
   });
 
+  expressApp.get('/exercises/workouts/:workoutName', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+    wrapRoute(async () => {
+      const { workoutName } = req.params;
+
+      if (!workoutName) {
+        throw CustomError.invalid("Please provide an ID for the exercise.");
+
+      }
+
+      const exercise = await exerciseService.getExerciseByWorkout(workoutName);
+      res.json(exercise);
+    }, next);
+  });
+
 
   expressApp.get('/exercises', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {

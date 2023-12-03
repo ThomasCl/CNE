@@ -1,5 +1,6 @@
 // App.js
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import WorkoutList from './components/WorkoutList';
 import ExerciseList from './components/ExerciseList';
 import SetList from './components/SetList';
@@ -19,15 +20,15 @@ function App() {
 
       {selectedWorkout && (
         <div>
-          <ExerciseForm workoutId={selectedWorkout.id} />
+          <ExerciseForm workoutName={selectedWorkout.name} />
 
-          <ExerciseList workoutId={selectedWorkout.id} setExercise={setSelectedExercise} />
+          <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} />
         </div>
       )}
 
       {selectedExercise && (
-        <><SetForm exerciseId={selectedExercise.id} />
-        <SetList exerciseId={selectedExercise.id} /></>
+        <><SetForm exercise={selectedExercise} />
+        <SetList exercise={selectedExercise} /></>
       )}
     </div>
   );

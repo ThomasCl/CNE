@@ -31,6 +31,20 @@ export const createSetRoutes = (expressApp: Express, setService: SetService) => 
   });
 
 
+  expressApp.get('/sets/:exerciseId', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+    wrapRoute(async () => {
+      const { exerciseId } = req.params;
+
+      if (!exerciseId) {
+        throw CustomError.invalid("Please provide exercise ID for the set.");
+      }
+
+      const set = await setService.getSetsByExercise(exerciseId);
+      res.json(set);
+    }, next);
+  });
+
+
   expressApp.get('/sets', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {
       const results = await setService.getSets();

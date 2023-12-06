@@ -33,6 +33,13 @@ export const createExerciseTemplateRoutes = (expressApp: Express, exerciseTempla
     }, next);
   });
 
+  expressApp.get('/exercise-templates', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
+    wrapRoute(async () => {
+      const exerciseTemplate = await exerciseTemplateService.getExerciseTemplates();
+      res.json(exerciseTemplate);
+    }, next);
+  });
+
 
   expressApp.get('/exercise-templates', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {

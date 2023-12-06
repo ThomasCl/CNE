@@ -11,26 +11,30 @@ import SetForm from './components/SetForm';
 function App() {
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [selectedExercise, setSelectedExercise] = useState(null);
+  const [exercises, setExercises] = useState([]);
+  const [sets, setSets] = useState([]);
 
   return (
-    <div>
-      <WorkoutForm />
+    <Router>
+      <div>
+        <WorkoutForm setExercises={setExercises} setSets={setSets} />
+        <WorkoutList setWorkout={setSelectedWorkout} setExercises={setExercises} setSets={setSets} />
 
-      <WorkoutList setWorkout={setSelectedWorkout} />
+        {selectedWorkout && (
+          <div>
+            <ExerciseForm workoutName={selectedWorkout.name} setExercises={setExercises} />
+            <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} setSelectedWorkout={setSelectedWorkout} />
+          </div>
+        )}
 
-      {selectedWorkout && (
-        <div>
-          <ExerciseForm workoutName={selectedWorkout.name} />
-
-          <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} />
-        </div>
-      )}
-
-      {selectedExercise && (
-        <><SetForm exercise={selectedExercise} />
-        <SetList exercise={selectedExercise} /></>
-      )}
-    </div>
+        {selectedExercise && (
+          <div>
+            <SetForm exercise={selectedExercise} setSelectedExercise={setSelectedExercise} />
+            <SetList exercise={selectedExercise} />
+          </div>
+        )}
+      </div>
+    </Router>
   );
 }
 

@@ -1,4 +1,3 @@
-// components/SetList.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -9,7 +8,13 @@ const SetList = ({ exercise }) => {
     // Fetch sets for a specific exercise
     axios.get(`http://localhost:8080/sets/${exercise.id}`)
       .then(response => setSets(response.data))
-      .catch(error => console.error('Error fetching sets:', error));
+      .catch(error => {
+        console.error('Error fetching sets:', error);
+        // Handle 404 error and reset sets
+        if (error.response && error.response.status === 404) {
+          setSets([]);
+        }
+      });
   }, [exercise.id]);
 
   return (

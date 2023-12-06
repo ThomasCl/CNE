@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const WorkoutList = ({setWorkout}) => {
+const WorkoutList = ({ setWorkout, setExercises, setSets }) => {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
@@ -10,7 +10,13 @@ const WorkoutList = ({setWorkout}) => {
     axios.get('http://localhost:8080/workouts')
       .then(response => setWorkouts(response.data))
       .catch(error => console.error('Error fetching workouts:', error));
-  }, []);
+  }, [setExercises, setSets]);
+
+  useEffect(() => {
+    // Reset exercises and sets when a new workout is selected
+    setExercises([]);
+    setSets([]);
+  }, [setExercises, setSets, setWorkout]);
 
   return (
     <div>

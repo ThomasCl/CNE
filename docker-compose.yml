@@ -25,9 +25,9 @@ services:
     restart: always
     build: ./backend
     ports:
-      - 3000:3000
+      - 8080:8080
 
   frontend:
     build: ./frontend-new
     ports:
-      - 3001:3001
+      - 3000:3000

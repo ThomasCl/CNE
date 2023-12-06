@@ -7,7 +7,7 @@ const ExerciseForm = ({ workoutName }) => {
 
   const handleCreateExercise = () => {
     // Send a POST request to create a new exercise for a specific workout
-    axios.post(`http://localhost:3000/exercises`, { template: exerciseName, workout: workoutName })
+    axios.post(`http://localhost:8080/exercises`, { template: exerciseName, workout: workoutName })
       .then(response => console.log('Exercise created:', response.data))
       .catch(error => console.error('Error creating exercise:', error));
   };

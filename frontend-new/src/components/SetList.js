@@ -7,7 +7,7 @@ const SetList = ({ exercise }) => {
 
   useEffect(() => {
     // Fetch sets for a specific exercise
-    axios.get(`http://localhost:3000/sets/${exercise.id}`)
+    axios.get(`http://localhost:8080/sets/${exercise.id}`)
       .then(response => setSets(response.data))
       .catch(error => console.error('Error fetching sets:', error));
   }, [exercise.id]);

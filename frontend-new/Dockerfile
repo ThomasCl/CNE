@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 3001
 
 # Define environment variable
-ENV REACT_APP_API_URL=http://localhost:3000
+ENV REACT_APP_API_URL=http://localhost:8080
 
 # Run app when the container launches
 CMD ["npm", "start", "--", "--port", "3001"]

@@ -12,7 +12,7 @@ const SetForm = ({ exercise }) => {
     console.log(exercise);
     let exerciseName = exercise.template;
     let workoutName = exercise.workout;
-    axios.post(`http://localhost:3000/sets`, { exerciseName, workoutName,number,weight, reps })
+    axios.post(`http://localhost:8080/sets`, { exerciseName, workoutName,number,weight, reps })
       .then(response => console.log('Set created:', response.data))
       .catch(error => console.error('Error creating set:', error));
   };

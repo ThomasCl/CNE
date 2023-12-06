@@ -7,7 +7,7 @@ const WorkoutList = ({setWorkout}) => {
 
   useEffect(() => {
     // Fetch workouts from your backend
-    axios.get('http://localhost:3000/workouts')
+    axios.get('http://localhost:8080/workouts')
       .then(response => setWorkouts(response.data))
       .catch(error => console.error('Error fetching workouts:', error));
   }, []);

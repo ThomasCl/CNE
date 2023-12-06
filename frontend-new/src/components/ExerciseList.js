@@ -7,7 +7,7 @@ const ExerciseList = ({ workoutName, setExercise }) => {
 
   useEffect(() => {
     // Fetch exercises for a specific workout
-    axios.get(`http://localhost:3000/exercises/workouts/${workoutName}`)
+    axios.get(`http://localhost:8080/exercises/workouts/${workoutName}`)
       .then(response => setExercises(response.data))
       .catch(error => console.error('Error fetching exercises:', error));
   }, [workoutName]);

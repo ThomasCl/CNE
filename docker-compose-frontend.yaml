@@ -1,0 +1,8 @@
+# Use root/example as user/password credentials
+version: "3.1"
+
+services:
+  frontend:
+    build: ./frontend-new
+    ports:
+      - 3000:3000

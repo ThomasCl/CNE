@@ -7,6 +7,7 @@ import SetList from './components/SetList';
 import WorkoutForm from './components/WorkoutForm';
 import ExerciseForm from './components/ExerciseForm';
 import SetForm from './components/SetForm';
+import './../public/style.css';
 
 function App() {
   const [selectedWorkout, setSelectedWorkout] = useState(null);
@@ -28,7 +29,7 @@ function App() {
         )}
 
         {selectedExercise && (
-          <div>
+          <div id="set-section">
             <SetForm exercise={selectedExercise} setSelectedExercise={setSelectedExercise} />
             <SetList exercise={selectedExercise} />
           </div>

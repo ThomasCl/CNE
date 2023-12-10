@@ -1,0 +1,127 @@
+/* Common styles for input and button */
+input, button {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Styles for exercise and set sections */
+div {
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #009688;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px;
+    margin-bottom: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+li:hover {
+    background-color: #f0f0f0;
+}
+
+
+/* Styles for Create Workout section */
+#create-workout-section {
+    background-color: #f0f8ff; /* Light Blue */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* Styles for Workouts section */
+#workouts-section {
+    background-color: #e0f7fa; /* Light Cyan */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+#workout-container {
+    background-color: #15c121; /* Light Cyan */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #b60abf; /* Border color */
+    flex: 1; /* Occupy remaining space */
+}
+
+#workout-form {
+    background-color: #e0f2f1; /* Teal */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+#workout-list {
+    background-color: #b2dfdb; /* Light Green */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for ExerciseForm, ExerciseList, SetForm, and SetList sections */
+#exercise-set-management-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#exercises-section {
+    background-color: #15c121; /* Amber */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddff00; /* Border color */
+}
+
+#set-section {
+    background-color: #4a0056;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid;
+}
+
+/* Common styles for form inputs */
+input[type="text"] {
+    width: 100%;
+}
+
+/* Responsive styling for smaller screens */
+@media screen and (max-width: 600px) {
+    #create-workout-section, #workouts-section, #workout-management-section, #exercise-set-management-section {
+        padding: 15px;
+    }
+
+    #exercise-set-management-section {
+        flex-direction: column;
+    }
+}
+
+
+/* Responsive styling for smaller screens */
+@media screen and (max-width: 600px) {
+    #create-workout-section, #workouts-section, #workout-management-section, #exercise-set-management-section {
+        padding: 15px;
+    }
+
+    #exercise-set-management-section {
+        flex-direction: column;
+    }
+}

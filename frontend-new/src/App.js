@@ -7,7 +7,6 @@ import SetList from './components/SetList';
 import WorkoutForm from './components/WorkoutForm';
 import ExerciseForm from './components/ExerciseForm';
 import SetForm from './components/SetForm';
-import './../public/style.css';
 
 function App() {
   const [selectedWorkout, setSelectedWorkout] = useState(null);
@@ -17,17 +16,17 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <WorkoutForm setExercises={setExercises} setSets={setSets} />
-        <WorkoutList setWorkout={setSelectedWorkout} setExercises={setExercises} setSets={setSets} />
-
-        {selectedWorkout && (
-          <div>
-            <ExerciseForm workoutName={selectedWorkout.name} setExercises={setExercises} />
-            <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} setSelectedWorkout={setSelectedWorkout} />
-          </div>
-        )}
-
+  <div id="the-big-container">
+    <div id="workout-section">
+      <WorkoutForm setExercises={setExercises} setSets={setSets} />
+      <WorkoutList setWorkout={setSelectedWorkout} setExercises={setExercises} setSets={setSets} />
+    </div>
+    {selectedWorkout && (
+      <div id="exercise-and-set-sections">
+        <div id="exercise-section">
+          <ExerciseForm workoutName={selectedWorkout.name} setExercises={setExercises} />
+          <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} setSelectedWorkout={setSelectedWorkout} />
+        </div>
         {selectedExercise && (
           <div id="set-section">
             <SetForm exercise={selectedExercise} setSelectedExercise={setSelectedExercise} />
@@ -35,7 +34,10 @@ function App() {
           </div>
         )}
       </div>
-    </Router>
+    )}
+  </div>
+</Router>
+
   );
 }
 

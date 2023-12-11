@@ -26,11 +26,17 @@ const ExerciseList = ({ workoutName, setExercise, setSelectedWorkout }) => {
   return (
     <div>
       <h2>Exercises</h2>
-      <ul>
-        {exercises.map(exercise => (
-          <li key={exercise.id} onClick={() => setExercise(exercise)}>{exercise.template}</li>
-        ))}
-      </ul>
+      {exercises.length === 0 ? (
+        <p>No exercises have been added yet</p>
+      ) : (
+        <ul>
+          {exercises.map(exercise => (
+            <li key={exercise.id} onClick={() => setExercise(exercise)}>
+              {exercise.template}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

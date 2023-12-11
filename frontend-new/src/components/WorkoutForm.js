@@ -19,7 +19,7 @@ const WorkoutForm = ({ setExercises, setSets }) => {
 
   return (
     <div>
-      <h2>Create Workout</h2>
+      <h3>Create Workout</h3>
       <input
         type="text"
         placeholder="Workout Name"

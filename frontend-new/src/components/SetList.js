@@ -19,13 +19,13 @@ const SetList = ({ exercise }) => {
 
   return (
     <div>
-      <h2>Sets</h2>
+      <h3>Sets</h3>
       {sets.length === 0 ? (
         <p>No sets have been added yet</p>
       ) : (
         <ul>
           {sets.map(set => (
-            <li key={set.id}>{`${set.number} Weight: ${set.weight}, Reps: ${set.reps}`}</li>
+            <li key={set.id}>{`${set.number})  Weight: ${set.weight},  Reps: ${set.reps}`}</li>
           ))}
         </ul>
       )}

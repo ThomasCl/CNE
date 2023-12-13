@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const ExerciseList = ({ workoutName, setExercise, setSelectedWorkout }) => {
   const [exercises, setExercises] = useState([]);
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
   useEffect(() => {
     // Fetch exercises for a specific workout
@@ -20,17 +21,30 @@ const ExerciseList = ({ workoutName, setExercise, setSelectedWorkout }) => {
 
   useEffect(() => {
     // Reset selected exercise when a new workout is selected
-    setExercise(null);
-  }, [workoutName, setExercise]);
+    setSelectedExercise(null);
+  }, [workoutName, setSelectedExercise]);
 
   return (
     <div>
-      <h2>Exercises</h2>
-      <ul>
-        {exercises.map(exercise => (
-          <li key={exercise.id} onClick={() => setExercise(exercise)}>{exercise.template}</li>
-        ))}
-      </ul>
+      <h3>Exercises</h3>
+      {exercises.length === 0 ? (
+        <p>No exercises have been added yet</p>
+      ) : (
+        <ul>
+          {exercises.map(exercise => (
+            <li
+              key={exercise.id}
+              onClick={() => {
+                setExercise(exercise);
+                setSelectedExercise(exercise);
+              }}
+              style={{ fontWeight: selectedExercise && selectedExercise.id === exercise.id ? 'bold' : 'normal' }}
+            >
+              {exercise.template}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

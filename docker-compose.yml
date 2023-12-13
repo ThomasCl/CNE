@@ -28,6 +28,6 @@ services:
       - 8080:8080
 
   frontend:
-    build: ./frontend-new
+    build: ./frontendHTML
     ports:
       - 3000:3000

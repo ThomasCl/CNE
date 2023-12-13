@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Vanilla JS App</title>
-  <!-- Include any stylesheets or additional head content here -->
+  <link rel="stylesheet" href="css/style.css">  
   <script src="js/WorkoutForm.js"></script>
   <script src="js/WorkoutList.js"></script>
   <script src="js/ExerciseForm.js"></script>
@@ -18,37 +18,54 @@
       <h3>Create Workout</h3>
       <input type="text" placeholder="Workout Name" id="workoutName" />
       <button onclick="handleCreateWorkout()">Create Workout</button>
-    </div>
-    <div>
-      <h3>Workouts</h3>
-      <ul id="workoutList"></ul>
-    </div>
-
-    <div>
-      <h3>Create Exercise</h3>
-      <input type="text" placeholder="Exercise Name" id="exerciseName" />
-      <button onclick="handleCreateExercise()">Create Exercise</button>
+      <div>
+        <h3>Workouts</h3>
+        <ul id="workoutList"></ul>
+      </div>
     </div>
 
-    <div>
-      <h3>Exercises</h3>
-      <ul id="exerciseList"></ul>
+    <div id="exercise-and-set-sections">
+      <div id="exercise-section">
+        <div>
+          <h3>Create Exercise</h3>
+          <input type="text" placeholder="Exercise Name" id="exerciseName" oninput="handleInput()"/>
+          <ul id="exerciseTemplateList" class="exerciseTemplatelist"></ul>
+          <button onclick="handleCreateExercise()">Create Exercise</button>
+        </div>
+
+        <div>
+          <h3>Exercises</h3>
+          <ul id="exerciseList"></ul>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <h3>Create Set</h3>
-      <input type="text" placeholder="SetNumber" id="setNumber" />
-      <input type="text" placeholder="Weight" id="setWeight" />
-      <input type="text" placeholder="Reps" id="setReps" />
-      <button onclick="handleCreateSet()">Create Set</button>
-    </div>
-    <div>
-      <h3>Sets</h3>
-      <ul id="setList"></ul>
+    <div id="set-section">
+      <div>
+        <h3>Create Set</h3>
+        <input type="text" placeholder="SetNumber" id="setNumber" />
+        <input type="text" placeholder="Weight" id="setWeight" />
+        <input type="text" placeholder="Reps" id="setReps" />
+        <button onclick="handleCreateSet()">Create Set</button>
+      </div>
+      <div>
+        <h3>Sets</h3>
+        <ul id="setList"></ul>
+      </div>
     </div>
   </div>
 
   <!-- Include your JavaScript files -->
+<script>
+  function handleInput() {
+  const searchTerm = exerciseName.value.toLowerCase();
+  const filteredTemplates = exerciseTemplates.filter(template =>
+    template.name.toLowerCase().includes(searchTerm)
+  );
+
+  renderExerciseTemplatesList(filteredTemplates);
+}
+</script>
 
 </body>
 </html>

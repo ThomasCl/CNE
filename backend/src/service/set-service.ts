@@ -22,11 +22,11 @@ export class SetService {
     return CosmosSetRepository.getInstance();
   }
 
-  async addSet(exerciseName: string, workoutName: string, number: number, weight: number, reps: number) {
-    if (!exerciseName || !workoutName || !number || !weight || !reps) {
+  async addSet(exerciseId: string, number: number, weight: number, reps: number) {
+    if (!exerciseId || !number || !weight || !reps) {
       throw CustomError.invalid('Set parameters are invalid.');
     }
-    const  exercise = await this.getExerciseService().getExercise(await this.getTemplateService().getExerciseTemplate(exerciseName), await this.getWorkoutService().getWorkout(workoutName));
+    const  exercise = await this.getExerciseService().getExerciseById(exerciseId);
     if (await (await this.getRepo()).setExists(exercise, number)) {
       throw CustomError.conflict('A set with this exercise and set number already exists.');
     }

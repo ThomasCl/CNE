@@ -74,7 +74,7 @@ const ExerciseForm = ({ workoutName }) => {
 
   return (
     <div>
-      <h2>Create Exercise</h2>
+      <h3>Create Exercise</h3>
       <input
         type="text"
         placeholder="Exercise Name"

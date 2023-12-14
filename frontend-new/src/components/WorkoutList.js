@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const WorkoutList = ({ setWorkout, setExercises, setSets }) => {
   const [workouts, setWorkouts] = useState([]);
+  const [selectedWorkout, setSelectedWorkout] = useState(null);
 
   useEffect(() => {
     // Fetch workouts from your backend
@@ -18,12 +19,25 @@ const WorkoutList = ({ setWorkout, setExercises, setSets }) => {
     setSets([]);
   }, [setExercises, setSets, setWorkout]);
 
+  const handleWorkoutClick = (workout) => {
+    // Set the selected workout
+    setSelectedWorkout(workout);
+    // Call the setWorkout function to communicate the selected workout to the parent component
+    setWorkout(workout);
+  };
+
   return (
     <div>
-      <h2>Workouts</h2>
+      <h3>Workouts</h3>
       <ul>
         {workouts.map(workout => (
-          <li key={workout.name} onClick={() => setWorkout(workout)}>{workout.name}</li>
+          <li
+            key={workout.name}
+            onClick={() => handleWorkoutClick(workout)}
+            style={{ fontWeight: selectedWorkout && selectedWorkout.name === workout.name ? 'bold' : 'normal' }}
+          >
+            {workout.name}
+          </li>
         ))}
       </ul>
     </div>

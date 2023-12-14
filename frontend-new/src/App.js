@@ -16,21 +16,27 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <WorkoutForm setExercises={setExercises} setSets={setSets} />
-        <WorkoutList setWorkout={setSelectedWorkout} setExercises={setExercises} setSets={setSets} />
-
+      <div id="the-big-container">
+        <div id="workout-section">
+          <WorkoutForm setExercises={setExercises} setSets={setSets} />
+          <WorkoutList setWorkout={setSelectedWorkout} setExercises={setExercises} setSets={setSets} />
+        </div>
         {selectedWorkout && (
-          <div>
-            <ExerciseForm workoutName={selectedWorkout.name} setExercises={setExercises} />
-            <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} setSelectedWorkout={setSelectedWorkout} />
-          </div>
-        )}
-
-        {selectedExercise && (
-          <div>
-            <SetForm exercise={selectedExercise} setSelectedExercise={setSelectedExercise} />
-            <SetList exercise={selectedExercise} />
+          <div id="exercise-and-set-sections">
+            <div id="exercise-section">
+              <p>Selected Workout: </p>
+              <h2>{selectedWorkout.name}</h2>
+              <ExerciseForm workoutName={selectedWorkout.name} setExercises={setExercises} />
+              <ExerciseList workoutName={selectedWorkout.name} setExercise={setSelectedExercise} setSelectedWorkout={setSelectedWorkout} />
+            </div>
+            {selectedExercise && (
+              <div id="set-section">
+                <p>Selected Exercise: </p>
+                <h2>{selectedExercise.template}</h2>
+                <SetForm exercise={selectedExercise} setSelectedExercise={setSelectedExercise} />
+                <SetList exercise={selectedExercise} />
+              </div>
+            )}
           </div>
         )}
       </div>

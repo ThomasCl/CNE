@@ -23,7 +23,7 @@ const SetForm = ({ exercise, setSelectedExercise }) => {
 
   return (
     <div>
-      <h2>Create Set</h2>
+      <h3>Create Set</h3>
       <input
         type="text"
         placeholder="SetNumber"

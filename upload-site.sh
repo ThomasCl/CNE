@@ -18,7 +18,7 @@ find "$local_folder" -type f | while read -r file_path; do
         relative_path=${file_path#$local_folder/}
 
         # Remove the file from the list of Azure blobs (to prevent deletion later)
-        sed -i "$relative_path" azure_blobs.txt
+        sed -i "$relative_path/d" azure_blobs.txt
 
         # Construct the Blob Storage URL for the file
         blob_url="https://$storage_account.blob.core.windows.net/$container_name/$relative_path?$sas_token"

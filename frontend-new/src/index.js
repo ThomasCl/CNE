@@ -1,4 +1,4 @@
-// index.js
+// index.ts
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

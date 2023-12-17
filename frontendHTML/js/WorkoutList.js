@@ -3,7 +3,7 @@ let selectedWorkout = null;
 
 const renderWorkouts = async () => {
   try {
-    const response = await fetch('http://localhost:8080/workouts');
+    const response = await fetch('http://localhost:8080/api/workouts');
     const workouts = await response.json();
 
     const workoutListContainer = document.getElementById('workoutList');

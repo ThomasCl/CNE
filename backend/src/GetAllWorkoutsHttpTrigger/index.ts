@@ -12,7 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
                 'Content-Type': 'application/json'
             }
         }
-    }, context)
+    }, context);
     context.log('HTTP trigger function processed a request.');
 };
 

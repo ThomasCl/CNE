@@ -10,7 +10,7 @@ function handleCreateSet() {
   }
 
   // Send a POST request to create a new set
-  fetch('http://localhost:8080/sets', {
+  fetch(`${host}/sets`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 const renderSetList = async (exerciseId) => {
   try {
-    const response = await fetch(`http://localhost:8080/sets/${exerciseId}`);
+    const response = await fetch(`${host}/sets/${exerciseId}`);
     if (response.status === 404) {
       // Handle 404 error (exercise not found for the specified workout)
       const setListContainer = document.getElementById('setList');

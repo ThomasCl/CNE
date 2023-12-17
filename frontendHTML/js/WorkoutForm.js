@@ -8,7 +8,7 @@ function handleCreateWorkout() {
   }
 
   // Send a POST request to create a new workout
-  fetch('http://localhost:8080/workouts', {
+  fetch(`${host}/workouts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

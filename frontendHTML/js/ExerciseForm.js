@@ -14,7 +14,7 @@ function handleCreateExercise(template) {
   }
 
   // Send a POST request to create a new exercise
-  fetch('http://localhost:8080/exercises', {
+  fetch(`${host}/exercises`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ let exerciseTemplates = [];
 const fetchExerciseTemplates = async () => {
   try {
     // Fetch exercise templates from the server on component mount
-    const response = await fetch(`http://localhost:8080/exercise-templates`);
+    const response = await fetch(`${host}/exercise-templates`);
     exerciseTemplates = await response.json();
   } catch (error) {
     console.error('Error fetching exercise templates:', error);

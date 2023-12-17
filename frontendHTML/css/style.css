@@ -39,6 +39,7 @@ input, button {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    width: auto;
 }
 
 input[type="text"] {
@@ -55,7 +56,7 @@ button {
 
 
 #the-big-container {
-    background-color: #c4c492; 
+    background-color: #545454;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
@@ -66,11 +67,12 @@ button {
 }
 
 #workout-section {
-    background-color: #f5f5dc;
+    background-color: #7c7879;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
     border: 1px solid #000;
+
 }
 
 #exercise-and-set-sections {
@@ -82,7 +84,7 @@ button {
 #exercise-section,
 #set-section {
     flex: 1;
-    background-color: #f5f5dc;
+    background-color: #7c7879;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);

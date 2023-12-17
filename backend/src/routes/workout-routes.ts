@@ -8,7 +8,9 @@ export const createWorkoutRoutes = (expressApp: Express, workoutService: Workout
 
   expressApp.post('/workouts', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {
-      const {name} = req.body;
+      const {
+        name
+      } = req.body;
 
       if (!name) {
         throw CustomError.invalid("Please provide a name and user for the workout.");

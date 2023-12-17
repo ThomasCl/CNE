@@ -6,9 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "post"
       ],
-      "route": "exercises/workouts/{workoutName}"
+      "route": "exercises"
     },
     {
       "type": "http",
@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/GetExerciseByWorkoutHttpTrigger/index.js"
+  "scriptFile": "../dist/CreateExerciseHttpTrigger/index.js"
 }

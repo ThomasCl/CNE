@@ -11,7 +11,7 @@ const renderExerciseList = async (workoutName) => {
     // Clear the previous content
     exerciseListContainer.innerHTML = exercises.length === 0
       ? '<p>No exercises have been added yet</p>'
-      : '<ul></ul>';
+      : '<ul class="grid-buttons"></ul>';
 
     const exerciseList = exerciseListContainer.querySelector('ul');
 

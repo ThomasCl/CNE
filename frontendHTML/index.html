@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Vanilla JS App</title>
-  <link rel="stylesheet" href="css/style.css">  
+  <link rel="stylesheet" href="css/bootstrap.css">
   <script src="js/WorkoutForm.js"></script>
   <script src="js/WorkoutList.js"></script>
   <script src="js/ExerciseForm.js"></script>
@@ -12,60 +12,62 @@
   <script src="js/SetForm.js"></script>
   <script src="js/SetList.js"></script>
 </head>
+
+<header class="popover-header">
+  <h1>Workout Tracker</h1>
+</header>
+
 <body>
-  <div id="the-big-container">
-    <div id="workout-section">
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12" id="workout-section">
       <h3>Create Workout</h3>
-      <input type="text" placeholder="Workout Name" id="workoutName" />
-      <button onclick="handleCreateWorkout()">Create Workout</button>
-      <div>
+      <input type="text" class="form-control" placeholder="Workout Name" id="workoutName" />
+      <button class="btn btn-primary mt-2" onclick="handleCreateWorkout()">Create Workout</button>
+      <div class="mt-3">
         <h3>Workouts</h3>
-        <ul id="workoutList"></ul>
+        <ul id="workoutList" class="grid-buttons"></ul>
       </div>
     </div>
 
-    <div id="exercise-and-set-sections">
+    <div class="col-md-12" id="exercise-and-set-sections">
       <div id="exercise-section">
-        <div>
-          <h3>Create Exercise</h3>
-          <input type="text" placeholder="Exercise Name" id="exerciseName" oninput="handleInput()"/>
-          <ul id="exerciseTemplateList" class="exerciseTemplatelist"></ul>
-          <button onclick="handleCreateExercise()">Create Exercise</button>
-        </div>
-
+        <h3>Create Exercise</h3>
+        <input type="text" class="form-control" placeholder="Exercise Name" id="exerciseName" oninput="handleInput()"/>
+        <ul id="exerciseTemplateList" class="exerciseTemplatelist"></ul>
+        <button class="btn btn-primary mt-2" onclick="handleCreateExercise()">Create Exercise</button>
         <div>
           <h3>Exercises</h3>
-          <ul id="exerciseList"></ul>
+          <ul id="exerciseList" class="list-group"></ul>
         </div>
-      </div>
-    </div>
-
-    <div id="set-section">
-      <div>
-        <h3>Create Set</h3>
-        <input type="text" placeholder="SetNumber" id="setNumber" />
-        <input type="text" placeholder="Weight" id="setWeight" />
-        <input type="text" placeholder="Reps" id="setReps" />
-        <button onclick="handleCreateSet()">Create Set</button>
-      </div>
-      <div>
-        <h3>Sets</h3>
-        <ul id="setList"></ul>
       </div>
     </div>
   </div>
 
-  <!-- Include your JavaScript files -->
+  <div class="row mt-4">
+    <div class="col" id="set-section">
+      <h3>Create Set</h3>
+      <input type="text" class="form-control" placeholder="SetNumber" id="setNumber" />
+      <input type="text" class="form-control mt-2" placeholder="Weight" id="setWeight" />
+      <input type="text" class="form-control mt-2" placeholder="Reps" id="setReps" />
+      <button class="btn btn-primary mt-2" onclick="handleCreateSet()">Create Set</button>
+      <div class="mt-3">
+        <h3>Sets</h3>
+        <ul id="setList" class="list-group"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Include your JavaScript files -->
 <script>
   function handleInput() {
-  const searchTerm = exerciseName.value.toLowerCase();
-  const filteredTemplates = exerciseTemplates.filter(template =>
-    template.name.toLowerCase().includes(searchTerm)
-  );
-
-  renderExerciseTemplatesList(filteredTemplates);
-}
+    const searchTerm = exerciseName.value.toLowerCase();
+    const filteredTemplates = exerciseTemplates.filter(template =>
+            template.name.toLowerCase().includes(searchTerm)
+    );
+    renderExerciseTemplatesList(filteredTemplates);
+  }
 </script>
-
 </body>
 </html>

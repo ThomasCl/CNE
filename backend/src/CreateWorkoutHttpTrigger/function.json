@@ -8,7 +8,7 @@
       "methods": [
         "post"
       ],
-      "route": "workouts/create"
+      "route": "workouts"
     },
     {
       "type": "http",

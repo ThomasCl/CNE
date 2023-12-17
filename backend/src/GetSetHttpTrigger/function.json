@@ -8,7 +8,7 @@
       "methods": [
         "get"
       ],
-      "route": "exercises/{exerciseId}/sets/{number}"
+      "route": "sets/{exerciseId}/{number}"
     },
     {
       "type": "http",

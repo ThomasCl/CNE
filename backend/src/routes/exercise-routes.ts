@@ -26,7 +26,6 @@ export const createExerciseRoutes = (expressApp: Express, exerciseService: Exerc
 
       if (!id) {
         throw CustomError.invalid("Please provide an ID for the exercise.");
-
       }
 
       const exercise = await exerciseService.getExerciseById(id);

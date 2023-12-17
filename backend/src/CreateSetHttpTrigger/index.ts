@@ -5,7 +5,6 @@ import {openRouteWrapper} from "../helpers/function-wrapper";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     await openRouteWrapper(async () => {
-        const exerciseId = context.bindingData.exerciseId;
         context.log('HTTP trigger function processed a request.');
 
         if (!req.body || !req.body.name) {
@@ -13,6 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         }
 
         const {
+            exerciseId,
             number,
             weight,
             reps

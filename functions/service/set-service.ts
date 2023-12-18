@@ -69,4 +69,10 @@ export class SetService {
   async getSets(){
     return (await this.getRepo()).getAllSets();
   }
+
+  add3Sets(id: string){
+    for (let i = 1; i <= 3; i++) {
+      this.addSet(id, i, 10, 10);
+    }
+  }
 }

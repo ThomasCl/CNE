@@ -5,6 +5,7 @@ import { Exercise_template } from "../domain/exercise-template";
 import { Workout } from "../domain/workout";
 import { CosmosExerciseRepository } from "../repository/cosmos-exercise-repository";;
 import { ExerciseTemplateService } from "./exercise_template-service";
+import { SetService } from "./set-service";
 import { WorkoutService } from "./workout-service";
 
 export class ExerciseService {
@@ -27,6 +28,10 @@ export class ExerciseService {
   private async getWorkoutService() {
     return WorkoutService.getInstance();
   }
+
+  private async getSetService() {
+    return SetService.getInstance();
+  }
   
   
 
@@ -39,8 +44,10 @@ export class ExerciseService {
     if(!template || !workout){
       throw CustomError.invalid('Exercise template or workout do not exist.');
     }
-    const exercise = new SimpleExercise(template, workout);
-    return (await this.getRepo()).createExercise(exercise);
+    const x = new SimpleExercise(template, workout);
+    const exercise = (await this.getRepo()).createExercise(x);
+    (await this.getSetService()).add3Sets((await exercise).id)
+    return exercise;
   }
 
   async getExerciseById(id: string) {

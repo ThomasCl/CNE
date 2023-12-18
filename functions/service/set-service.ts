@@ -26,7 +26,7 @@ export class SetService {
     if (!exerciseId || !number || !weight || !reps) {
       throw CustomError.invalid('Set parameters are invalid.');
     }
-    const  exercise = await this.getExerciseService().getExerciseById(exerciseId);
+    const exercise = await this.getExerciseService().getExerciseById(exerciseId);
     if (await (await this.getRepo()).setExists(exercise, number)) {
       throw CustomError.conflict('A set with this exercise and set number already exists.');
     }
@@ -61,12 +61,24 @@ export class SetService {
     return (await this.getRepo()).getSetsByExercise(exerciseId);
   }
 
+  async updateSet(exerciseId: string, number: number, set: Set) {
+    if (!exerciseId || !number || !set) {
+      throw CustomError.invalid('Set parameters are invalid.');
+    }
+    const exercise = await this.getExerciseService().getExerciseById(exerciseId);
+    if (!await (await this.getRepo()).setExists(exercise, number)) {
+      throw CustomError.conflict('The set you want to update does not exist.');
+    } else {
+      return (await this.getRepo()).updateSet(set);
+    }
+  }
+
 
   getExerciseService() { return ExerciseService.getInstance(); }
-  getTemplateService(){ return ExerciseTemplateService.getInstance(); }
-  getWorkoutService(){ return WorkoutService.getInstance(); }
+  getTemplateService() { return ExerciseTemplateService.getInstance(); }
+  getWorkoutService() { return WorkoutService.getInstance(); }
 
-  async getSets(){
+  async getSets() {
     return (await this.getRepo()).getAllSets();
   }
 

@@ -4,6 +4,7 @@ import { Set, SimpleSet } from "../domain/set";
 import { Exercise } from "../domain/exercise";
 import { config } from "dotenv";
 import { v4 as uuidv4 } from 'uuid';
+
 export class CosmosSetRepository {
 
     private static instance: CosmosSetRepository;
@@ -30,7 +31,7 @@ export class CosmosSetRepository {
             const connectionString = process.env.COSMOS_DB_CONN_STRING;
             const cosmosDbName = process.env.COSMOS_DB_NAME || 'db';
             const containerId = 'sets';
-            if(connectionString == undefined){
+            if (connectionString == undefined) {
                 throw new Error('Cosmos DB connection string is not defined.');
             }
             const client = new CosmosClient(connectionString);
@@ -54,6 +55,22 @@ export class CosmosSetRepository {
             return await this.getSet(set.exercise, set.number);
         } else {
             throw CustomError.internal("Could not create set.");
+        }
+    }
+
+    async updateSet(set: Set): Promise<Set> {
+        const result = await this.container.items.update({
+            id: set.id,
+            exercise: set.exercise,
+            number: set.number,
+            weight: set.weight,
+            reps: set.reps
+        });
+
+        if (result && result.statusCode == 201) {
+            return await this.getSet(set.exercise, set.number);
+        } else {
+            throw CustomError.internal("Could not update set.");
         }
     }
 

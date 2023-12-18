@@ -37,7 +37,9 @@
       <div id="exercise-section">
         <h3>Create Exercise</h3>
         <input type="text" class="form-control" placeholder="Exercise Name" id="exerciseName" oninput="handleInput()"/>
-        <ul id="exerciseTemplateList" class="exerciseTemplatelist"></ul>
+        <div class="exercise-template-container">
+          <ul id="exerciseTemplateList" class="exerciseTemplatelist"></ul>
+        </div>
         <button class="btn btn-primary mt-2" onclick="handleCreateExercise()">Create Exercise</button>
         <div>
           <h3>Exercises</h3>

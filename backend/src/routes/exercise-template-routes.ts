@@ -40,14 +40,6 @@ export const createExerciseTemplateRoutes = (expressApp: Express, exerciseTempla
     }, next);
   });
 
-
-  expressApp.get('/exercise-templates', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
-    wrapRoute(async () => {
-      const results = await exerciseTemplateService.getExerciseTemplates();
-      res.json(results);
-    }, next);
-  });
-
   expressApp.get('/exercise-templates/like/:name', unauthenticatedRoute, (req: Request, res: Response, next: NextFunction) => {
     wrapRoute(async () => {
       const { name } = req.params;

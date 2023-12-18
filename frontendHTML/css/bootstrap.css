@@ -10089,3 +10089,8 @@ body {
   font-size: 8px;
   line-height: 8px;
 }
+
+.exercise-template-container {
+  max-height: 200px; /* Set the desired height */
+  overflow-y: auto; /* Add a vertical scrollbar if needed */
+}

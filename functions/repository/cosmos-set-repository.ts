@@ -58,9 +58,9 @@ export class CosmosSetRepository {
         }
     }
 
-    async updateSet(set: Set): Promise<Set> {
+    async updateSet(oldSet: Set, set: SimpleSet): Promise<Set> {
         const result = await this.container.items.update({
-            id: set.id,
+            id: oldSet.id,
             exercise: set.exercise,
             number: set.number,
             weight: set.weight,

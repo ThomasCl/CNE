@@ -61,7 +61,7 @@ export class SetService {
     return (await this.getRepo()).getSetsByExercise(exerciseId);
   }
 
-  async updateSet(exerciseId: string, number: number, set: Set) {
+  async updateSet(exerciseId: string, number: number, set: SimpleSet) {
     if (!exerciseId || !number || !set) {
       throw CustomError.invalid('Set parameters are invalid.');
     }
@@ -69,7 +69,8 @@ export class SetService {
     if (!await (await this.getRepo()).setExists(exercise, number)) {
       throw CustomError.conflict('The set you want to update does not exist.');
     } else {
-      return (await this.getRepo()).updateSet(set);
+      const oldSet = await (await this.getRepo()).getSet(exercise, number);
+      return (await this.getRepo()).updateSet(oldSet, set);
     }
   }
 
@@ -82,7 +83,7 @@ export class SetService {
     return (await this.getRepo()).getAllSets();
   }
 
-  add3Sets(id: string){
+  add3Sets(id: string) {
     this.addSet(id, 1, 10, 10);
     this.addSet(id, 2, 10, 10);
     this.addSet(id, 3, 10, 10);
@@ -98,9 +99,9 @@ export class SetService {
       throw CustomError.notFound('Set not found.');
     }
     const deleted = (await this.getRepo()).deleteSet(setId);
-    try{
-    await (await this.getRepo()).getSetsByExercise(ex)
-    }catch(error) {
+    try {
+      await (await this.getRepo()).getSetsByExercise(ex)
+    } catch (error) {
       if (error instanceof CustomError && error.message === 'Set not found.') {
         this.getExerciseService().deleteExercise(ex);
       }

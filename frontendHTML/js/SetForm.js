@@ -24,6 +24,7 @@ function handleCreateSet() {
       .then(data => {
         console.log('Set created:', data);
         renderSetList(selectedExercise.id); // Update the set list
+        renderExerciseList(selectedWorkout.name);
       })
       .catch(error => console.error('Error creating set:', error));
     })
@@ -65,7 +66,7 @@ function handleDeleteSelectedSets() {
           console.log('Set deleted');
           setCheckbox.closest('li').remove(); // Remove the set item from the list
           renderSetList(selectedExercise.id); // Refresh the set list
-          renderExerciseList(); // Refresh the exercise list
+          renderExerciseList(selectedWorkout.name); // Refresh the exercise list
         } else {
           console.error('Error deleting set');
         }

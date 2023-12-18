@@ -65,6 +65,7 @@ function handleDeleteSelectedSets() {
           console.log('Set deleted');
           setCheckbox.closest('li').remove(); // Remove the set item from the list
           renderSetList(selectedExercise.id); // Refresh the set list
+          renderExerciseList(selectedWorkout.name)
         } else {
           console.error('Error deleting set');
         }

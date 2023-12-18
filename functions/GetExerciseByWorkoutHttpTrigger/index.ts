@@ -4,7 +4,7 @@ import {ExerciseService} from "../service/exercise-service";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     await openRouteWrapper(async () => {
-        const workoutName = context.bindingData.name
+        const workoutName = context.bindingData.workoutName
         const exercises = await ExerciseService.getInstance().getExerciseByWorkout(workoutName);
 
         context.res = {

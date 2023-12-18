@@ -17,7 +17,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
         context.res = {
             status: 204, // 204 No Content is appropriate for successful DELETE requests
-            body: {},
             headers: {
                 'Content-Type': 'application/json'
             }

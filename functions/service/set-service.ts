@@ -26,7 +26,7 @@ export class SetService {
     if (!exerciseId || !number || !weight || !reps) {
       throw CustomError.invalid('Set parameters are invalid.');
     }
-    const  exercise = await this.getExerciseService().getExerciseById(exerciseId);
+    const exercise = await this.getExerciseService().getExerciseById(exerciseId);
     if (await (await this.getRepo()).setExists(exercise, number)) {
       throw CustomError.conflict('A set with this exercise and set number already exists.');
     }
@@ -61,33 +61,51 @@ export class SetService {
     return (await this.getRepo()).getSetsByExercise(exerciseId);
   }
 
+  async updateSet(exerciseId: string, number: number, set: SimpleSet) {
+    if (!exerciseId || !number || !set) {
+      throw CustomError.invalid('Set parameters are invalid.');
+    }
+    const exercise = await this.getExerciseService().getExerciseById(exerciseId);
+    if (!await (await this.getRepo()).setExists(exercise, number)) {
+      throw CustomError.conflict('The set you want to update does not exist.');
+    } else {
+      const oldSet = await (await this.getRepo()).getSet(exercise, number);
+      return (await this.getRepo()).updateSet(oldSet, set);
+    }
+  }
+
 
   getExerciseService() { return ExerciseService.getInstance(); }
-  getTemplateService(){ return ExerciseTemplateService.getInstance(); }
-  getWorkoutService(){ return WorkoutService.getInstance(); }
+  getTemplateService() { return ExerciseTemplateService.getInstance(); }
+  getWorkoutService() { return WorkoutService.getInstance(); }
 
-  async getSets(){
+  async getSets() {
     return (await this.getRepo()).getAllSets();
   }
 
-  add3Sets(id: string){
-    for (let i = 1; i <= 3; i++) {
-      this.addSet(id, i, 10, 10);
-    }
+  add3Sets(id: string) {
+    this.addSet(id, 1, 10, 10);
+    this.addSet(id, 2, 10, 10);
+    this.addSet(id, 3, 10, 10);
   }
 
   async deleteSet(setId: string) {
     if (!setId) {
       throw CustomError.invalid('Set ID is required.');
     }
-    const ex = (await (await this.getRepo()).getSetById(setId)).exercise;
+    const set = (await (await this.getRepo()).getSetById(setId));
+    const ex = set.exercise
     if (!ex) {
       throw CustomError.notFound('Set not found.');
     }
     const deleted = (await this.getRepo()).deleteSet(setId);
-    if((await (await this.getRepo()).getSetsByExercise(ex.id)).length == 0){
-      this.getExerciseService().deleteExercise(ex.id);
+    try {
+      await (await this.getRepo()).getSetsByExercise(ex)
+    } catch (error) {
+      if (error instanceof CustomError && error.message === 'Set not found.') {
+        this.getExerciseService().deleteExercise(ex);
+      }
     }
-    return deleted;
+    return set;
   }
 }

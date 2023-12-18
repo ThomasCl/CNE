@@ -35,6 +35,13 @@ export class SetService {
     return (await this.getRepo()).createSet(set);
   }
 
+async deleteSet(setId: string) {
+    if (!setId) {
+      throw CustomError.invalid('Set ID is required.');
+    }
+    return (await this.getRepo()).deleteSet(setId);
+  }
+
   async getSet(exerciseId: number, number: number) {
     if (!exerciseId || !number) {
       throw CustomError.invalid('ExerciseId or set number is invalid.');

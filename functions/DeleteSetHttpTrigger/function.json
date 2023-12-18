@@ -6,9 +6,9 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "delete"
       ],
-      "route": "exercises/workouts/{workoutName}"
+      "route": "sets/{setId}"
     },
     {
       "type": "http",
@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/GetExerciseByWorkoutHttpTrigger/index.js"
+  "scriptFile": "../dist/DeleteSetHttpTrigger/index.js"
 }

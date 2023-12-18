@@ -57,6 +57,15 @@ export class CosmosSetRepository {
         }
     }
 
+    async deleteSet(setId: string): Promise<void> {
+        const result = await this.container.item(setId).delete();
+        if (result && result.statusCode === 204) {
+            return;
+        } else {
+            throw CustomError.internal("Could not delete set.");
+        }
+    }
+
     async setExists(exercise: Exercise, number: number): Promise<boolean> {
         const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" and c.number = "${number}"`;
         const { resources } = await this.container.items.query(query).fetchAll();
@@ -73,6 +82,7 @@ export class CosmosSetRepository {
             throw CustomError.notFound('Set not found.');
         }
     }
+
 
     async getSetsByExercise(exercise: string): Promise<Set[]> {
         const query = `SELECT * FROM c WHERE c.exercise = "${exercise}" order by c.number`;

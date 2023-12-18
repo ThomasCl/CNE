@@ -11,7 +11,7 @@ const renderSetList = async (exerciseId) => {
     const setListContainer = document.getElementById('setList');
     setListContainer.innerHTML = sets.length === 0
       ? '<p>No sets have been added yet</p>'
-      : sets.map(set => `<li key=${set.id}>${set.number})  Weight: ${set.weight},  Reps: ${set.reps}</li>`).join('');
+      : sets.map(set => `<li key=${set.id}>${set.number})  Weight: ${set.weight},  Reps: ${set.reps}<button class="btn btn-danger mt-2" onclick="handleDeleteSet(${set.id})">Delete</button></li>`).join('');
           } catch (error) {
     console.error('Error fetching exercises:', error);
   }

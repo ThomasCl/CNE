@@ -102,4 +102,13 @@ export class CosmosExerciseRepository {
             throw CustomError.notFound('Exercise not found.');
         }
     }
+
+    async deleteExercise(exId: string): Promise<Exercise[]> {
+        const result = await this.container.item(exId).delete();
+        if (result && result.statusCode === 204) {
+            return;
+        } else {
+            throw CustomError.internal("Could not delete exercise.");
+        }
+    }
 }

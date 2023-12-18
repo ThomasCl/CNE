@@ -75,4 +75,19 @@ export class SetService {
       this.addSet(id, i, 10, 10);
     }
   }
+
+  async deleteSet(setId: string) {
+    if (!setId) {
+      throw CustomError.invalid('Set ID is required.');
+    }
+    const ex = (await (await this.getRepo()).getSetById(setId)).exercise;
+    if (!ex) {
+      throw CustomError.notFound('Set not found.');
+    }
+    const deleted = (await this.getRepo()).deleteSet(setId);
+    if((await (await this.getRepo()).getSetsByExercise(ex.id)).length == 0){
+      this.getExerciseService().deleteExercise(ex.id);
+    }
+    return deleted;
+  }
 }

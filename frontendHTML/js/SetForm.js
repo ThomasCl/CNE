@@ -24,3 +24,21 @@ function handleCreateSet() {
     })
     .catch(error => console.error('Error creating set:', error));
 }
+
+function handleDeleteSet(setId) {
+  // Replace `setId` with the appropriate identifier for the set
+
+  // Send a DELETE request to delete the set
+  fetch(`${host}/sets/${setId}`, {
+    method: 'DELETE'
+  })
+      .then(response => {
+        if (response.ok) {
+          console.log('Set deleted');
+          renderSetList(selectedExercise.id); // Refresh the set list
+        } else {
+          console.error('Error deleting set');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+}

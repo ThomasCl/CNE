@@ -76,4 +76,11 @@ export class ExerciseService {
   async getExercises(){
     return (await this.getRepo()).getAllExercises();
   }
+
+async deleteExercise(id: string) {
+  if (!id) {
+    throw CustomError.invalid('Exercise ID is invalid.');
+  }
+  return(await this.getRepo()).deleteExercise(id);
+}
 }

@@ -69,4 +69,11 @@ export class SetService {
   async getSets(){
     return (await this.getRepo()).getAllSets();
   }
+
+  async deleteSet(setId: string) {
+    if (!setId) {
+      throw CustomError.invalid('Set ID is required.');
+    }
+    return (await this.getRepo()).deleteSet(setId);
+  }
 }

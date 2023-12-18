@@ -114,4 +114,13 @@ export class CosmosSetRepository {
             throw CustomError.notFound('Exercise not found.');
         }
     }
+
+    async deleteSet(setId: string): Promise<void> {
+        const result = await this.container.item(setId).delete();
+        if (result && result.statusCode === 204) {
+            return;
+        } else {
+            throw CustomError.internal("Could not delete set.");
+        }
+    }
 }

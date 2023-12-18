@@ -71,9 +71,9 @@ export class SetService {
   }
 
   add3Sets(id: string){
-    for (let i = 1; i <= 3; i++) {
-      this.addSet(id, i, 10, 10);
-    }
+    this.addSet(id, 1, 10, 10);
+    this.addSet(id, 2, 10, 10);
+    this.addSet(id, 3, 10, 10);
   }
 
   async deleteSet(setId: string) {

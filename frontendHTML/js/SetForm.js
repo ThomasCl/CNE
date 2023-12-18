@@ -8,7 +8,7 @@ function handleCreateSet() {
     return;
   }
 
-  fetch(`${host}/sets?exerciseId=${selectedExercise.id}`)
+  fetch(`${host}/sets/${selectedExercise.id}`)
     .then(response => response.json())
     .then(sets => {
       // Automatically determine the set number

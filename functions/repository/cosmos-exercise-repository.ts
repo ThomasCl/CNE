@@ -52,11 +52,6 @@ export class CosmosExerciseRepository {
         }
     }
 
-    // async exerciseExists(name: string): Promise<boolean> {
-    //     const result = await this.collection.findOne({ name });
-    //     return !!result;
-    // }
-
     async getExerciseById(id: string): Promise<Exercise> {
         const query = `SELECT * FROM c WHERE c.id = "${id}"`;
         const { resources } = await this.container.items.query(query).fetchAll();

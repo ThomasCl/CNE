@@ -1,7 +1,6 @@
 import { CosmosClient } from "@azure/cosmos";
 import { CustomError } from "../domain/custom-error";
 import { Exercise_template } from "../domain/exercise-template";
-import { Exercise } from "../domain/exercise";
 import { config } from "dotenv";
 
 export class CosmosExerciseTemplateRepository {

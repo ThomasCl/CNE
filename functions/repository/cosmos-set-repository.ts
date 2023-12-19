@@ -59,29 +59,36 @@ export class CosmosSetRepository {
     }
 
     async updateSet(oldSet: Set, set: SimpleSet): Promise<Set> {
-        const result = await this.container.items.update({
-            id: oldSet.id,
-            exercise: set.exercise,
-            number: set.number,
-            weight: set.weight,
-            reps: set.reps
-        });
-
-        if (result && result.statusCode == 201) {
-            return await this.getSet(set.exercise, set.number);
+        const item = await this.container.item(oldSet.id).read();
+    
+        if (item.statusCode === 200) {
+            const existingSet = item.resource;
+            existingSet.exercise = set.exercise.id;
+            existingSet.number = set.number;
+            existingSet.weight = set.weight;
+            existingSet.reps = set.reps;
+    
+            const result = await this.container.item(existingSet.id).replace(existingSet);
+    
+            if (result && result.statusCode === 200) {
+                return await this.getSet(set.exercise, set.number);
+            } else {
+                throw CustomError.internal("Could not update set.");
+            }
         } else {
-            throw CustomError.internal("Could not update set.");
+            throw CustomError.notFound('Set not found.');
         }
     }
+    
 
     async setExists(exercise: Exercise, number: number): Promise<boolean> {
-        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" and c.number = "${number}"`;
+        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" and c.number = ${number}`;
         const { resources } = await this.container.items.query(query).fetchAll();
         return resources.length > 0;
     }
 
     async getSet(exercise: Exercise, number: number): Promise<Set> {
-        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" AND c.number = "${number}"`;
+        const query = `SELECT * FROM c WHERE c.exercise = "${exercise.id}" AND c.number = ${number}`;
         const { resources } = await this.container.items.query(query).fetchAll();
 
         if (resources.length > 0) {

@@ -8,23 +8,25 @@ import { ExerciseService } from "../service/exercise-service";
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     await openRouteWrapper(async () => {
 
-        if (!req.body || !req.body.set || !context.bindingData.setId) {
-            throw CustomError.invalid("A valid set and setId are required.");
+        if (!req.body || !req.body.weight || !context.bindingData.reps) {
+            throw CustomError.invalid("Weight and reps need to be set.");
         }
 
         const {
             weight,
             reps
         } = req.body;
-
+        let result = null
         const number = context.bindingData.number;
         const exerciseId = context.bindingData.exerciseId;
         const exercise = await ExerciseService.getInstance().getExerciseById(exerciseId);
-
-        SetService.getInstance().updateSet(exerciseId, number, new SimpleSet(exercise, number, weight, reps));
-
+        try{
+            result = await SetService.getInstance().updateSet(exerciseId, number, new SimpleSet(exercise, number, weight, reps));
+        }catch(e){
+            throw CustomError.invalid(e.message);
+        }
         context.res = {
-            body: {},
+            body: result,
             headers: {
                 'Content-Type': 'application/json'
             }

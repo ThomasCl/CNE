@@ -101,7 +101,7 @@ const renderSetList = async (exerciseId) => {
         const saveButton = document.createElement('button');
         saveButton.className = 'btn btn-success';
         saveButton.textContent = 'Save';
-        saveButton.addEventListener('click', () => handleSaveSet(set.exercise,set.number, weightInput.value, repsInput.value));
+        saveButton.addEventListener('click', () => handleSaveSet(set.exercise,set.number, weightInput.querySelector('input').value, repsInput.querySelector('input').value));
 
         // Append input fields and the "Save" button to the list item
         listItem.appendChild(checkbox);
@@ -122,7 +122,7 @@ const renderSetList = async (exerciseId) => {
 // Helper function to create an input field
 function createInputField(label, value) {
   const input = document.createElement('input');
-  input.type = 'text';
+  input.type = 'number';
   input.className = 'form-control me-2';
   input.value = value;
 
@@ -142,7 +142,6 @@ function createInputField(label, value) {
 async function handleSaveSet(exerciseId, setNumber, newWeight, newReps) {
   try {
     const updateSetEndpoint = `${host}/exercises/${exerciseId}/set/${setNumber}/edit`;
-    console.log(updateSetEndpoint)
     // Make a PUT request to the API endpoint to update the set
     const response = await fetch(updateSetEndpoint, {
       method: 'PUT',

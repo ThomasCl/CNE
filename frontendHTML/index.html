@@ -73,9 +73,11 @@
 <script>
   function handleInput() {
     const searchTerm = exerciseName.value.toLowerCase();
-    const filteredTemplates = exerciseTemplates.filter(template =>
-            template.name.toLowerCase().includes(searchTerm)
-    );
+    let filteredTemplates = null;
+    if (searchTerm !== ""){
+      filteredTemplates = exerciseTemplates.filter(template =>
+              template.name.toLowerCase().includes(searchTerm));
+    }
     renderExerciseTemplatesList(filteredTemplates);
   }
 </script>

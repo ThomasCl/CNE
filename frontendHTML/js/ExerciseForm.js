@@ -53,7 +53,9 @@ function renderExerciseTemplatesList(exercises) {
   exerciseTemplateListContainer.innerHTML = '';
 
   if (exercises.length === 0) {
-    exerciseTemplateListContainer.innerHTML = '<p>No exercises found</p>';
+    if(exercises != null){
+      exerciseTemplateListContainer.innerHTML = '<p>No exercises found</p>';
+    }
   } else {
     const ul = document.createElement('ul');
     ul.className = 'exercise-list';

@@ -81,43 +81,89 @@ const renderSetList = async (exerciseId) => {
       // Clear existing items
       setListContainer.innerHTML = '';
 
-      // Loop through each set and append an editable input field for each value
-      sets.forEach((set, index) => {
-        const listItem = document.createElement('li');
-        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+      // Create table structure
+      const table = document.createElement('table');
+      table.className = 'table table-bordered table-striped';
 
-        // Create input fields for weight and reps
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.className = 'form-check-input me-2';
-        checkbox.setAttribute('data-set-id', set.id);
+      // Create table header
+      const thead = document.createElement('thead');
+      thead.innerHTML = `
+        <tr>
+          <th scope="col" class="text-center">DELETE</th>
+          <th scope="col" class="text-center">SET</th>
+          <th scope="col" class="text-center">WEIGHT</th>
+          <th scope="col" class="text-center">REPS</th>
+          <th scope="col" class="text-center">SAVE</th>
+        </tr>
+      `;
+      table.appendChild(thead);
 
+      // Create table body
+      const tbody = document.createElement('tbody');
 
-        const setNumberText = document.createTextNode(`${set.number}:`);
-        const weightInput = createInputField('Weight', set.weight);
-        const repsInput = createInputField('Reps', set.reps);
+      // Loop through each set and create table rows
+      sets.forEach((set) => {
+        const row = document.createElement('tr');
 
-        // Create "Save" button to update the set
+        // Create checkbox for deletion
+        const deleteCell = document.createElement('td');
+        deleteCell.className = 'text-center';
+        const deleteCheckbox = document.createElement('input');
+        deleteCheckbox.type = 'checkbox';
+        deleteCheckbox.className = 'form-check-input';
+        deleteCheckbox.setAttribute('data-set-id', set.id);
+        deleteCell.appendChild(deleteCheckbox);
+
+        // Create set number cell
+        const setNumberCell = document.createElement('td');
+        setNumberCell.className = 'text-center';
+        setNumberCell.textContent = set.number;
+
+        // Create weight input cell
+        const weightCell = document.createElement('td');
+        weightCell.className = 'text-center';
+        const weightInput = createInputField('', set.weight);
+        weightCell.appendChild(weightInput);
+
+        // Create reps input cell
+        const repsCell = document.createElement('td');
+        repsCell.className = 'text-center';
+        const repsInput = createInputField('', set.reps);
+        repsCell.appendChild(repsInput);
+
+        // Create "Save" button cell
+        const saveCell = document.createElement('td');
+        saveCell.className = 'text-center';
         const saveButton = document.createElement('button');
-        saveButton.className = 'btn btn-success';
+        saveButton.className = 'btn btn-primary mt-2 w-100';
         saveButton.textContent = 'Save';
-        saveButton.addEventListener('click', () => handleSaveSet(set.exercise,set.number, weightInput.querySelector('input').value, repsInput.querySelector('input').value));
+        saveButton.addEventListener('click', () =>
+          handleSaveSet(set.exercise, set.number, weightInput.querySelector('input').value, repsInput.querySelector('input').value)
+        );
+        saveCell.appendChild(saveButton);
 
-        // Append input fields and the "Save" button to the list item
-        listItem.appendChild(checkbox);
-        listItem.appendChild(setNumberText);
-        listItem.appendChild(weightInput);
-        listItem.appendChild(repsInput);
-        listItem.appendChild(saveButton);
+        // Append cells to the row
+        row.appendChild(deleteCell);
+        row.appendChild(setNumberCell);
+        row.appendChild(weightCell);
+        row.appendChild(repsCell);
+        row.appendChild(saveCell);
 
-        // Append the list item to the set list
-        setListContainer.appendChild(listItem);
+        // Append row to table body
+        tbody.appendChild(row);
       });
+
+      table.appendChild(tbody);
+
+      // Append table to the set list container
+      setListContainer.appendChild(table);
     }
   } catch (error) {
     console.error('Error fetching sets:', error);
   }
 };
+
+
 
 // Helper function to create an input field
 function createInputField(label, value) {
